@@ -269,7 +269,58 @@ def exchangeSort(arr, n) :
             if arr[i] < arr[j] :
                 arr[i], arr[j] = arr[j], arr[i]            
 
-N = 5000
+def merge(arr, left, mid, right):
+    # print("merge lef:", left, " mid:", mid, " right:", right)
+    for i in range(left, right+1) :
+        arr_copy[i] = arr[i]
+    
+    i, j = left, mid+1
+    k = 0
+
+    for k in range(left, right+1) :
+        if i > mid or j > right :
+            break
+        if arr_copy[i] < arr_copy[j] :
+            arr[k] = arr_copy[i]
+            i += 1
+        else:
+            arr[k] = arr_copy[j]
+            j+=1
+
+    if i > mid :
+        start = j
+        end = right + 1
+    else:
+        start = i
+        end = mid+1
+
+    for i in range(start, end) :
+        arr[k] = arr_copy[i]
+        k += 1
+ 
+def naturalMergeSort(arr, n) :
+
+    while True:
+        left = 1
+        mid = -1
+        right = -1
+        for i in range(1, n+1) :
+            if i == n or arr[i] > arr[i+1] :
+                if mid == -1 :
+                    mid = i
+                elif right == -1 :
+                    right = i
+                    merge(arr, left, mid, right)
+                    left = i+1
+                    mid = -1
+                    right = -1
+        if left == 1 : # run 이 하나밖에 없음
+            break
+
+
+
+
+N = 100000
 # M = N
 M = 1000  # 계수정렬 때 사용. M이 너무 크면 안되니...
 arr = []
@@ -290,14 +341,14 @@ arr_copy = arr.copy()
 start_time = time.time()
 # selectionSort(arr, N)
 
-bubbleSort(arr, N, False)
+# bubbleSort(arr, N, False)
 # cocktailShakerSort(arr, N)
 
 # insertionSort(arr, N)
 # shellSort(arr, N)
 # quickSort(arr, 1, N)
 # quickSort2(arr, 1, N)
-# mergeSort(arr, 1, N)
+mergeSort(arr, 1, N)
 # heapSort(arr, N)
 # countingSort(arr, N, M)
 
@@ -310,6 +361,7 @@ bubbleSort(arr, N, False)
 # selectionSortDesc(arr, N)
 
 # exchangeSort(arr, N)
+# naturalMergeSort(arr, N)
 
 end_time = time.time()
 print('정렬에 소요된 시간 (N=%d) : %0.3f' %(N, (end_time-start_time)))
