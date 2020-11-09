@@ -316,11 +316,27 @@ def naturalMergeSort(arr, n) :
                     right = -1
         if left == 1 : # run 이 하나밖에 없음
             break
+def binary_search_upper_bound(arr, start, end, value) :
+    while start < end :
+        m = int((start + end)/2)
+        if value >= arr[m] :
+            start = m+1
+        else :
+            end = m
+    return end
+
+def binaryInsertionSort(arr, n) :
+    for i in range(1, n+1) :
+        value = arr[i]
+        pos = binary_search_upper_bound(arr, 1, i, value)
+
+        for j in range(i, pos, -1) :
+            arr[j] = arr[j-1]
+        arr[pos] = value
 
 
 
-
-N = 100000
+N = 10000
 # M = N
 M = 1000  # 계수정렬 때 사용. M이 너무 크면 안되니...
 arr = []
@@ -348,7 +364,7 @@ start_time = time.time()
 # shellSort(arr, N)
 # quickSort(arr, 1, N)
 # quickSort2(arr, 1, N)
-mergeSort(arr, 1, N)
+# mergeSort(arr, 1, N)
 # heapSort(arr, N)
 # countingSort(arr, N, M)
 
@@ -362,7 +378,7 @@ mergeSort(arr, 1, N)
 
 # exchangeSort(arr, N)
 # naturalMergeSort(arr, N)
-
+binaryInsertionSort(arr, N)
 end_time = time.time()
 print('정렬에 소요된 시간 (N=%d) : %0.3f' %(N, (end_time-start_time)))
 checkSort(arr, N, True)
