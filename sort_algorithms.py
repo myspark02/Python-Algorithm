@@ -333,10 +333,16 @@ def binaryInsertionSort(arr, n) :
         for j in range(i, pos, -1) :
             arr[j] = arr[j-1]
         arr[pos] = value
+ 
+def make_binary_tree(arr_copy, value) :
+    pass         
 
 
+    
+def binaryTreeSort(arr, n) :
+    pass
 
-N = 10000
+N = 10
 # M = N
 M = 1000  # 계수정렬 때 사용. M이 너무 크면 안되니...
 arr = []
@@ -349,7 +355,7 @@ for i in range(N) :
     arr.append(random.randint(1, N))
     # arr.append(random.randint(1, M))
 
-# print(arr)
+print(arr)
 checkSort(arr, N, True)
 
 arr_copy = arr.copy()
@@ -378,8 +384,9 @@ start_time = time.time()
 
 # exchangeSort(arr, N)
 # naturalMergeSort(arr, N)
-binaryInsertionSort(arr, N)
+# binaryInsertionSort(arr, N)
+binaryTreeSort(arr, N)
 end_time = time.time()
 print('정렬에 소요된 시간 (N=%d) : %0.3f' %(N, (end_time-start_time)))
 checkSort(arr, N, True)
-# print(arr)
+print(arr)
