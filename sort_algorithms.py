@@ -1,4 +1,5 @@
 import random, time
+from typing import BinaryIO
 
 def checkSort(arr, n, asc=True) :
     isSorted = True
@@ -333,16 +334,55 @@ def binaryInsertionSort(arr, n) :
         for j in range(i, pos, -1) :
             arr[j] = arr[j-1]
         arr[pos] = value
- 
-def make_binary_tree(arr_copy, value) :
-    pass         
 
+class Node :
+    def __init__(self, key=None, left=None, right=None) :
+        self.key = key 
+        self.left = left
+        self.right = right
 
+class BinarTree :
+    count = 0
+    def __init__(self) :
+        self.head = Node(-1, None, None)
+    
+    def insert(self, value) :
+        previous = navigator = self.head
+
+        while navigator != None :
+            previous = navigator
+            if navigator.key > value :
+                navigator = navigator.left
+            else :
+                navigator = navigator.right
+
+        navigator = Node(value, None, None)
+
+        if previous.key > value :
+            previous.left = navigator
+        else :
+            previous.right = navigator
+      
+
+def inorder_traverse(tree, arr) :
+    if tree==None :
+        return
+    inorder_traverse(tree.left, arr)
+    idx = BinarTree.count   # start from zero, to put head Node's key into zero index of arr
+    arr[idx] = tree.key
+    BinarTree.count += 1
+    inorder_traverse(tree.right, arr)
     
 def binaryTreeSort(arr, n) :
-    pass
 
-N = 10
+    tree = BinarTree()
+    
+    for i in range(1, n+1) :
+        tree.insert(arr[i])
+    
+    inorder_traverse(tree.head, arr)
+
+N = 10000
 # M = N
 M = 1000  # 계수정렬 때 사용. M이 너무 크면 안되니...
 arr = []
@@ -355,7 +395,7 @@ for i in range(N) :
     arr.append(random.randint(1, N))
     # arr.append(random.randint(1, M))
 
-print(arr)
+# print(arr)
 checkSort(arr, N, True)
 
 arr_copy = arr.copy()
@@ -389,4 +429,4 @@ binaryTreeSort(arr, N)
 end_time = time.time()
 print('정렬에 소요된 시간 (N=%d) : %0.3f' %(N, (end_time-start_time)))
 checkSort(arr, N, True)
-print(arr)
+# print(arr)
