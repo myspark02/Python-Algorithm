@@ -395,6 +395,72 @@ def binaryTreeSort(arr, n) :
 #   트리의 리프에 도달하면 다시 트리를 따라 올라가면서 
 #   이전과 동일한 과정을 반복하면 정렬된 배열을 얻을 수 있다.
 
+def tournamentSort(arr, n) :
+    # caculates size of array representing a complete binary tree
+    # find k which makes 2ᵏ equal to or larger than n
+    # We need a binary tree of level k+1, and that means we need an array of the size which is sum from 2⁰ to 2ᵏ⁻¹ + n    
+    
+    num_of_nodes = k = 0
+    # print(arr)
+    # print('---------------------------------')
+    while True :
+        numOfElemementsOnLeafs = pow(2, k)
+        num_of_nodes += numOfElemementsOnLeafs
+        if numOfElemementsOnLeafs >= n :
+            break
+        k+=1
+    num_of_nodes = num_of_nodes - pow(2, k) + n
+    
+    # make every node a full node
+    if n%2 != 0 : 
+        num_of_nodes += 1
+
+    # print('num_of_nodes:', num_of_nodes)
+    # make all the elements of arr be in the level k+1 of a binary tree
+    b_arr = []
+    b_arr.append(None)
+    #initialize b_arr with 0s
+    for i in range(1, num_of_nodes+1) :
+        b_arr.append(0)
+    
+    #copy all the elements in arr to the leaf nodes of a complete binary tree represented by b_arr array
+    idx = pow(2, k)
+    for i in range(1, n+1) :
+        b_arr[idx] =  arr[i]
+        idx+=1
+    
+    # print(b_arr)
+    # repeat tournament n times
+    idx = n
+    while idx > 0 :
+        for i in range(int(num_of_nodes/2), 0, -1) :
+            if b_arr[i*2] > b_arr[i*2+1]:
+                b_arr[i] = b_arr[i*2]
+            else :
+                b_arr[i] = b_arr[i*2+1]        
+        
+        arr[idx] = b_arr[1]
+        idx -= 1
+
+        # print(b_arr)
+
+        # considering dups in arr we follow only one path which has same value with a root
+        j = 1
+        root_value = b_arr[1]
+        while j <= num_of_nodes :
+            if b_arr[j] == root_value :
+                b_arr[j] = 0
+                j *= 2
+            else :
+                b_arr[j+1] = 0
+                j = (j+1)*2
+        
+        # for j in range(2, num_of_nodes+1) :
+        #     if b_arr[j] == b_arr[1] :
+        #         b_arr[j] = 0
+        
+    # print('############################')
+
 N = 10000
 # M = N
 M = 1000  # 계수정렬 때 사용. M이 너무 크면 안되니...
@@ -438,7 +504,10 @@ start_time = time.time()
 # exchangeSort(arr, N)
 # naturalMergeSort(arr, N)
 # binaryInsertionSort(arr, N)
-binaryTreeSort(arr, N)
+# binaryTreeSort(arr, N)
+
+tournamentSort(arr, N)
+
 end_time = time.time()
 print('정렬에 소요된 시간 (N=%d) : %0.3f' %(N, (end_time-start_time)))
 checkSort(arr, N, True)
