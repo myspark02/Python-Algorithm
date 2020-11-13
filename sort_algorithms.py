@@ -461,7 +461,32 @@ def tournamentSort(arr, n) :
         
     # print('############################')
 
-N = 10000
+import itertools
+def exhasustionSort(arr, n):
+    #고갈 정렬(exhaustion sort)은 올바른 정렬 결과를 찾을 때까지
+    # 원소들의 모든 순열을 검사하여 정렬이 된 조합을 찾는다.
+
+    arr_copy = []
+    for i in range(1, n+1) :
+        arr_copy.append(arr[i])
+
+    arr_permutation = itertools.permutations(arr_copy, n)
+   
+    for permutation in arr_permutation:
+        previous = permutation[0]
+        sorted = True
+        for i in range(1, n) :
+            if (permutation[i] < previous) :
+                sorted = False
+                break
+            previous = permutation[i]
+        if sorted == True :
+            for i in range(n):
+                arr[i+1] = permutation[i]
+            break        
+
+
+N = 10
 # M = N
 M = 1000  # 계수정렬 때 사용. M이 너무 크면 안되니...
 arr = []
@@ -474,10 +499,10 @@ for i in range(N) :
     arr.append(random.randint(1, N))
     # arr.append(random.randint(1, M))
 
-# print(arr)
+print(arr)
 checkSort(arr, N, True)
 
-arr_copy = arr.copy()
+# arr_copy = arr.copy()
 
 start_time = time.time()
 # selectionSort(arr, N)
@@ -506,9 +531,10 @@ start_time = time.time()
 # binaryInsertionSort(arr, N)
 # binaryTreeSort(arr, N)
 
-tournamentSort(arr, N)
+# tournamentSort(arr, N)
+exhasustionSort(arr, N)
 
 end_time = time.time()
 print('정렬에 소요된 시간 (N=%d) : %0.3f' %(N, (end_time-start_time)))
 checkSort(arr, N, True)
-# print(arr)
+print(arr)
