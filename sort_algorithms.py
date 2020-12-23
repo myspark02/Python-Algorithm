@@ -499,7 +499,7 @@ for i in range(N) :
     arr.append(random.randint(1, N))
     # arr.append(random.randint(1, M))
 
-print(arr)
+# print(arr)
 checkSort(arr, N, True)
 
 # arr_copy = arr.copy()
@@ -512,7 +512,10 @@ start_time = time.time()
 
 # insertionSort(arr, N)
 # shellSort(arr, N)
-# quickSort(arr, 1, N)
+# N = 9
+# arr = [None, 7, 6, 10, 5, 9, 2, 1, 15, 7]
+# print(arr)
+quickSort(arr, 1, N)
 # quickSort2(arr, 1, N)
 # mergeSort(arr, 1, N)
 # heapSort(arr, N)
@@ -532,7 +535,7 @@ start_time = time.time()
 # binaryTreeSort(arr, N)
 
 # tournamentSort(arr, N)
-exhasustionSort(arr, N)
+# exhasustionSort(arr, N)
 
 end_time = time.time()
 print('정렬에 소요된 시간 (N=%d) : %0.3f' %(N, (end_time-start_time)))
